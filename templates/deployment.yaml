@@ -31,15 +31,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - '/bin/bash'
-            - '-c'
-            - 'eval'
-            - 'echo'
-            - '\"$(cat /home/server/config/STServer_raw.ini)\"'
-            - '>'
-            - '/home/server/config/STServer.ini'
-            - '&'
-            - './SkyrimTogetherServer'
+            - 'sh'
+            - 'entrypoint.sh'
           env:
             - name: ST_SERVER_PASSWORD
               valueFrom:
@@ -57,6 +50,9 @@ spec:
             - name: server-conf
               mountPath: /home/server/config/STServer_raw.ini
               subPath: STServer_raw.ini
+            - name: entrypoint
+              mountPath: /home/server/entrypoint.sh
+              subPath: entrypoint.sh
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
@@ -66,6 +62,12 @@ spec:
             items:
               - key: STServer_raw.ini
                 path: STServer_raw.ini
+        - name: entrypoint
+          configMap:
+            name: {{ include "st-reborn.fullname" . }}
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
