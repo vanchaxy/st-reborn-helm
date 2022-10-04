@@ -4,16 +4,16 @@ metadata:
   name: {{ include "st-reborn.fullname" . }}
   labels:
     {{- include "st-reborn.labels" . | nindent 4 }}
-  {{- with .Values.serviceAnnotations }}
+  {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  type: NodePort
+  type: {{ .Values.service.type }}
   ports:
     - protocol: UDP
-      port: 10578
-      targetPort: 10578
-      nodePort: 31313
+      port: {{ .Values.port }}
+      targetPort: {{ .Values.port }}
+      nodePort: {{ .Values.service.nodePort }}
   selector:
     {{- include "st-reborn.selectorLabels" . | nindent 4 }}

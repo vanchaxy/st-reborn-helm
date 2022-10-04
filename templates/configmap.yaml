@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "st-reborn.fullname" . }}
+  labels:
+    {{- include "st-reborn.labels" . | nindent 4 }}
+data:
+  STServer.ini:
+    {{- range $section, $settings := .Values.config }}
+    [{{ $section }}]
+    {{- range $key, $val := $settings }}
+    {{ $key }} = {{ tpl ($val | toString) . }}
+    {{- end }}
+    {{ end }}

@@ -21,7 +21,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "st-reborn.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -32,7 +31,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: skyrimserver
-              containerPort: 10578
+              containerPort: {{ .Values.port }}
               protocol: UDP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
