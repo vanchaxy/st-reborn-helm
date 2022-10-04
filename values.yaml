@@ -19,7 +19,7 @@ config:
     bSyncPlayerHomes: false
     bEnablePvp: false
     bEnableGreetings: false
-    uDifficulty: 3
+    uDifficulty: 4
   LiveServices:
     bAnnounceServer: false
   ModPolicy:
