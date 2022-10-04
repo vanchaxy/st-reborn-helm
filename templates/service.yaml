@@ -4,6 +4,10 @@ metadata:
   name: {{ include "st-reborn.fullname" . }}
   labels:
     {{- include "st-reborn.labels" . | nindent 4 }}
+  {{- with .Values.serviceAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: LoadBalancer
   ports:
