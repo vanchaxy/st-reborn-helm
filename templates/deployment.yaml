@@ -31,7 +31,12 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - 'eval "echo \"$(cat /home/server/config/STServer.ini)\"" > /home/server/config/STServer.ini'
+            - 'eval'
+            - 'echo'
+            - '\"$(cat /home/server/config/STServer_raw.ini)\"'
+            - '>'
+            - '/home/server/config/STServer.ini'
+            - '&'
             - './SkyrimTogetherServer'
           env:
             - name: ST_SERVER_PASSWORD
@@ -48,8 +53,8 @@ spec:
               protocol: UDP
           volumeMounts:
             - name: server-conf
-              mountPath: /home/server/config/STServer.ini
-              subPath: STServer.ini
+              mountPath: /home/server/config/STServer_raw.ini
+              subPath: STServer_raw.ini
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
@@ -57,8 +62,8 @@ spec:
           configMap:
             name: {{ include "st-reborn.fullname" . }}
             items:
-              - key: STServer.ini
-                path: STServer.ini
+              - key: STServer_raw.ini
+                path: STServer_raw.ini
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
