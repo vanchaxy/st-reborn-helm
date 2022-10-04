@@ -30,6 +30,19 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - 'eval "echo \"$(cat /home/server/config/STServer.ini)\"" > /home/server/config/STServer.ini'
+            - './SkyrimTogetherServer'
+          env:
+            - name: ST_SERVER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  {{- if .Values.existingSecret }}
+                  name: {{ .Values.existingSecret }}
+                  {{- else }}
+                  name: {{ include "st-reborn.fullname" . }}
+                  {{- end }}
+                  key: ST_SERVER_PASSWORD
           ports:
             - containerPort: {{ .Values.port }}
               protocol: UDP

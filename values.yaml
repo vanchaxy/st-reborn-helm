@@ -9,6 +9,9 @@ fullnameOverride: ""
 
 port: 10578
 
+stServerPassword: "change-me"
+existingSecret: ""
+
 config:
   Gameplay:
     fGoldLossFactor: 0
@@ -27,7 +30,7 @@ config:
     bAllowSKSE: true
     bEnableModCheck: false
   GameServer:
-    sPassword: ""
+    sPassword: "${ST_SERVER_PASSWORD}"
     sServerName: "Dedicated Together Server"
     bPremiumMode: true
     uMaxPlayerCount: 8
