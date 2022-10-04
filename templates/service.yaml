@@ -5,10 +5,10 @@ metadata:
   labels:
     {{- include "st-reborn.labels" . | nindent 4 }}
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-    - port: 10578
+    - protocol: UDP
+      port: 10578
       targetPort: 10578
-      name: skyrimserver
   selector:
     {{- include "st-reborn.selectorLabels" . | nindent 4 }}
