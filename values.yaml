@@ -12,9 +12,25 @@ port: 10578
 config:
   Gameplay:
     fGoldLossFactor: 0
+    bEnableXpSync: true
+    bEnableItemDrops: false
+    uTimeScale: 20
+    bEnableDeathSystem: true
+    bSyncPlayerHomes: false
+    bEnablePvp: false
+    bEnableGreetings: false
+    uDifficulty: 3
   LiveServices:
     bAnnounceServer: false
+  ModPolicy:
+    bAllowMO2: true
+    bAllowSKSE: true
+    bEnableModCheck: false
   GameServer:
+    sPassword: ""
+    sServerName: "Dedicated Together Server"
+    bPremiumMode: true
+    uMaxPlayerCount: 8
     uPort: "{{ .Values.port }}"
 
 service:

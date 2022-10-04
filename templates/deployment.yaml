@@ -30,11 +30,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: skyrimserver
-              containerPort: {{ .Values.port }}
+            - containerPort: {{ .Values.port }}
               protocol: UDP
+          volumeMounts:
+            - name: server-conf
+              mountPath: /home/server/config/STServer.ini
+              subPath: STServer.ini
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: server-conf
+          configMap:
+            name: {{ include "st-reborn.fullname" . }}
+            items:
+              - key: STServer.ini
+                path: STServer.ini
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
