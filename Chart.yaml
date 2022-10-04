@@ -1,0 +1,6 @@
+apiVersion: v2
+name: st-reborn
+description: A helm chart to deploy Skyrim Together Reborn server
+type: application
+version: 0.1.0
+appVersion: "amd64-1.3.2"
