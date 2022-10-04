@@ -5,7 +5,8 @@ metadata:
   labels:
     {{- include "st-reborn.labels" . | nindent 4 }}
 data:
-  entrypoint.sh:
+  entrypoint.sh: |-
+     #!/bin/sh
      eval "echo \"$(cat /home/server/config/STServer_raw.ini)\"" > /home/server/config/STServer.ini
      ./SkyrimTogetherServer
   STServer_raw.ini: |-
