@@ -9,10 +9,11 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  type: NodePort
   ports:
-    - name: st-reborn
-      protocol: UDP
+    - protocol: UDP
       port: 10578
       targetPort: 10578
+      nodePort: 31313
   selector:
     {{- include "st-reborn.selectorLabels" . | nindent 4 }}
