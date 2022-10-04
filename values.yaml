@@ -38,6 +38,11 @@ service:
   nodePort: 31313
   annotations: {}
 
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
 podAnnotations: {}
 
 podSecurityContext: {}
