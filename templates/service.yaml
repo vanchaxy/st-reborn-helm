@@ -14,6 +14,8 @@ spec:
     - protocol: UDP
       port: {{ .Values.port }}
       targetPort: {{ .Values.port }}
+      {{- if eq $.Values.service.type "NodePort" }}
       nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
   selector:
     {{- include "st-reborn.selectorLabels" . | nindent 4 }}
